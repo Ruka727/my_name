@@ -31,6 +31,15 @@
             height: 30px;
             background-color: green;
         }
+        .hitbox {
+            position: absolute;
+            left: 50px;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            border: 2px solid red; /* 当たり判定を赤い四角で表示 */
+            pointer-events: none; /* マウスイベントを無視 */
+        }
         .cactus {
             position: absolute;
             bottom: 0;
@@ -78,9 +87,11 @@
     <div id="lives">残機: <span id="lifeCount">2</span></div>
     <div id="game">
         <div id="dino"></div>
+        <div class="hitbox" id="hitbox"></div> <!-- 当たり判定用の四角 -->
     </div>
     <script>
         const dino = document.getElementById('dino');
+        const hitbox = document.getElementById('hitbox'); // 当たり判定の要素を取得
         const game = document.getElementById('game');
         const startButton = document.getElementById('start');
         const timerDisplay = document.getElementById('timer');
@@ -105,10 +116,12 @@
                         }
                         jumpHeight -= 5;
                         dino.style.bottom = `${jumpHeight}px`;
+                        hitbox.style.bottom = `${jumpHeight}px`; // 当たり判定をダイノと同じ高さに更新
                     }, 20);
                 }
                 jumpHeight += 5;
                 dino.style.bottom = `${jumpHeight}px`;
+                hitbox.style.bottom = `${jumpHeight}px`; // 当たり判定をダイノと同じ高さに更新
             }, 20);
         }
 

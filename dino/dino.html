@@ -136,6 +136,9 @@
         }
 
         function moveCactus(cactus) {
+            const cactusHeight = parseInt(getComputedStyle(cactus).getPropertyValue('height'));
+            const cactusBottom = 0; // サボテンの底の位置
+
             const cactusInterval = setInterval(() => {
                 let cactusLeft = parseInt(getComputedStyle(cactus).getPropertyValue('left'));
                 if (cactusLeft < -20) {
@@ -146,7 +149,12 @@
                 }
 
                 const dinoBottom = parseInt(getComputedStyle(dino).getPropertyValue('bottom'));
-                if (cactusLeft < 100 && cactusLeft > 50 && dinoBottom < 30) {
+                const dinoHeight = parseInt(getComputedStyle(dino).getPropertyValue('height'));
+
+                // サボテンの上部とダイノの下部の位置を考慮した衝突判定
+                if (cactusLeft < 100 && cactusLeft > 50 &&
+                    dinoBottom < cactusHeight + cactusBottom && 
+                    dinoBottom + dinoHeight > cactusBottom) {
                     lives--; // 残機を減らす
                     lifeCountDisplay.textContent = lives; // 残機を表示
                     cactus.remove(); // 障害物を削除

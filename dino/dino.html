@@ -39,7 +39,7 @@
         }
         .lowCactus {
             position: absolute;
-            bottom: 0;
+            bottom: 30px; /* ジャンプしないと当たらない高さ */
             width: 20px;
             background-color: orange; /* 下をくぐれるサボテンの色 */
             height: 20px; /* 低いサボテンの高さ */
@@ -149,7 +149,7 @@
 
         function moveCactus(cactus) {
             const cactusHeight = parseInt(getComputedStyle(cactus).getPropertyValue('height'));
-            const cactusBottom = 0; // サボテンの底の位置
+            const cactusBottom = parseInt(getComputedStyle(cactus).getPropertyValue('bottom'));
 
             const cactusInterval = setInterval(() => {
                 let cactusLeft = parseInt(getComputedStyle(cactus).getPropertyValue('left'));

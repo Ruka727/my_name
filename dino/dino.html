@@ -13,6 +13,7 @@
             height: 100vh;
             background-color: #f0f0f0;
             margin: 0;
+            transition: background-color 0.5s; /* 背景色の変更にアニメーションを追加 */
         }
         #game {
             position: relative;
@@ -89,7 +90,19 @@
         let jumping = false;
         let timer;
         let seconds = 0;
-        let lives = 2; // 残機を2機に設定
+        let lives = 3; // 残機を2機に設定
+
+        function updateBackgroundColor() {
+            if (lives === 3) {
+                document.body.style.backgroundColor = "#84c98b"; // 通常の色
+            } else if (lives === 2) {
+                document.body.style.backgroundColor = "#ffcc33"; // 警告色
+            } else if (lives === 1) {
+                document.body.style.backgroundColor = "#ff0000"; // 警告色
+            } else if (lives <= 0) {
+                document.body.style.backgroundColor = "#000000"; // ゲームオーバー色
+            }
+        }
 
         function jump() {
             if (jumping) return;

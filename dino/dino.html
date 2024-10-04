@@ -44,6 +44,13 @@
             background-color: orange; /* 下をくぐれるサボテンの色 */
             height: 20px; /* 低いサボテンの高さ */
         }
+        .yellowCactus {
+            position: absolute;
+            bottom: 20px; /* 底から20pxの高さに浮かせる */
+            width: 20px;
+            background-color: yellow; /* 黄色のサボテン */
+            height: 40px; /* 高さを設定 */
+        }
         #start {
             font-size: 24px;
             margin-bottom: 20px;
@@ -125,18 +132,20 @@
         startButton.addEventListener('click', startGame);
 
         function createCactus() {
-            const cactusType = Math.random() < 0.5 ? 'cactus' : 'lowCactus';
-            const cactus = document.createElement('div');
-            cactus.classList.add(cactusType);
-            cactus.style.left = '600px';
-
-            // サボテンの高さをランダムに設定（30pxから70pxの間）または低いサボテンの場合は固定
-            if (cactusType === 'cactus') {
-                const randomHeight = Math.floor(Math.random() * 41) + 30; 
-                cactus.style.height = `${randomHeight}px`;
+            const cactusType = Math.random();
+            let cactus;
+            if (cactusType < 0.33) {
+                cactus = document.createElement('div');
+                cactus.classList.add('cactus');
+                cactus.style.height = `${Math.floor(Math.random() * 41) + 30}px`; // 通常のサボテン
+            } else if (cactusType < 0.66) {
+                cactus = document.createElement('div');
+                cactus.classList.add('lowCactus'); // 下をくぐれるサボテン
             } else {
-                cactus.style.height = '20px'; // 低いサボテンの高さ
+                cactus = document.createElement('div');
+                cactus.classList.add('yellowCactus'); // 黄色いサボテン
             }
+            cactus.style.left = '600px';
             cactus.style.bottom = '0px'; // 基本は底から出現
 
             game.appendChild(cactus);

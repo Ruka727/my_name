@@ -53,11 +53,16 @@
             margin-bottom: 10px;
             display: none; /* タイマーは初めは非表示 */
         }
+        #lives {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
     <button id="start">ゲームスタート！スペースキーでジャンプ</button>
     <div id="timer">経過時間: <span id="time">0</span>秒</div>
+    <div id="lives">残機: <span id="lifeCount">2</span></div>
     <div id="game">
         <div id="dino"></div>
     </div>
@@ -67,9 +72,11 @@
         const startButton = document.getElementById('start');
         const timerDisplay = document.getElementById('timer');
         const timeSpan = document.getElementById('time');
+        const lifeCountDisplay = document.getElementById('lifeCount');
         let jumping = false;
         let timer;
         let seconds = 0;
+        let lives = 2; // 残機を2機に設定
 
         function jump() {
             if (jumping) return;
@@ -96,6 +103,7 @@
             startButton.style.display = 'none'; // スタートボタンを非表示
             game.style.display = 'block'; // ゲームエリアを表示
             timerDisplay.style.display = 'block'; // タイマーを表示
+            lifeCountDisplay.textContent = lives; // 残機を表示
             document.addEventListener('keydown', jump);
             setInterval(createCactus, 2000);
             startTimer(); // タイマーを開始
@@ -130,10 +138,16 @@
 
                 const dinoBottom = parseInt(getComputedStyle(dino).getPropertyValue('bottom'));
                 if (cactusLeft < 100 && cactusLeft > 50 && dinoBottom < 30) {
-                    alert(`ゲームオーバー！経過時間: ${seconds}秒`);
-                    clearInterval(cactusInterval);
-                    clearInterval(timer); // タイマーを停止
-                    location.reload();
+                    lives--; // 残機を減らす
+                    lifeCountDisplay.textContent = lives; // 残機を表示
+                    cactus.remove(); // 障害物を削除
+
+                    if (lives <= 0) {
+                        alert(`ゲームオーバー！経過時間: ${seconds}秒`);
+                        clearInterval(cactusInterval);
+                        clearInterval(timer); // タイマーを停止
+                        location.reload();
+                    }
                 }
             }, 20);
         }

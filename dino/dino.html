@@ -105,8 +105,8 @@
             timerDisplay.style.display = 'block'; // タイマーを表示
             lifeCountDisplay.textContent = lives; // 残機を表示
             document.addEventListener('keydown', jump);
-            setInterval(createCactus, 2000);
             startTimer(); // タイマーを開始
+            createCactus(); // 初めてのサボテンを生成
         }
 
         function startTimer() {
@@ -124,6 +124,10 @@
             cactus.style.left = '600px';
             game.appendChild(cactus);
             moveCactus(cactus);
+
+            // 次のサボテンをランダムな時間で生成
+            const randomInterval = Math.floor(Math.random() * 2000) + 1000; // 1秒から3秒の間
+            setTimeout(createCactus, randomInterval);
         }
 
         function moveCactus(cactus) {

@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #007655;
+            background-color: #f0f0f0;
             margin: 0;
         }
         #game {
@@ -35,7 +35,6 @@
             position: absolute;
             bottom: 0;
             width: 20px;
-            height: 30px;
             background-color: brown;
         }
         #start {
@@ -122,6 +121,12 @@
             const cactus = document.createElement('div');
             cactus.classList.add('cactus');
             cactus.style.left = '600px';
+
+            // サボテンの高さをランダムに設定（30pxから70pxの間）
+            const randomHeight = Math.floor(Math.random() * 41) + 30; 
+            cactus.style.height = `${randomHeight}px`;
+            cactus.style.bottom = '0px'; // 基本は底から出現
+
             game.appendChild(cactus);
             moveCactus(cactus);
 

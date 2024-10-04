@@ -37,6 +37,13 @@
             width: 20px;
             background-color: brown;
         }
+        .lowCactus {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            background-color: orange; /* 下をくぐれるサボテンの色 */
+            height: 20px; /* 低いサボテンの高さ */
+        }
         #start {
             font-size: 24px;
             margin-bottom: 20px;
@@ -118,13 +125,18 @@
         startButton.addEventListener('click', startGame);
 
         function createCactus() {
+            const cactusType = Math.random() < 0.5 ? 'cactus' : 'lowCactus';
             const cactus = document.createElement('div');
-            cactus.classList.add('cactus');
+            cactus.classList.add(cactusType);
             cactus.style.left = '600px';
 
-            // サボテンの高さをランダムに設定（30pxから70pxの間）
-            const randomHeight = Math.floor(Math.random() * 41) + 30; 
-            cactus.style.height = `${randomHeight}px`;
+            // サボテンの高さをランダムに設定（30pxから70pxの間）または低いサボテンの場合は固定
+            if (cactusType === 'cactus') {
+                const randomHeight = Math.floor(Math.random() * 41) + 30; 
+                cactus.style.height = `${randomHeight}px`;
+            } else {
+                cactus.style.height = '20px'; // 低いサボテンの高さ
+            }
             cactus.style.bottom = '0px'; // 基本は底から出現
 
             game.appendChild(cactus);
